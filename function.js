@@ -42,7 +42,7 @@ function protectMates()
 		if(current.type=="monster" && current.target != null && current.target != partyLeaderName)
 		{
 			playerTargeted=get_player(current.target)
-			if (playerTargeted.party==character.party)
+			if (playerTargeted != null && playerTargeted.party==character.party)
 			{
 				oldTarget=character.target;
 				newTarget=current;
