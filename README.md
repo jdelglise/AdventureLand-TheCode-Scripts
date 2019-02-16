@@ -27,7 +27,7 @@ Other functions might also be fine tuned as you whish with the params, e.g :
 character.js
 ------------------------------------------
 
-Load character script to any of your character
+Load character script ob any of your character
 
 
 ------------------------------------------
@@ -41,13 +41,15 @@ This script does the following :
 - attack ennemies in area, but won't attack too weak target for your level
 
 - Have a party behaviour :
-  - The leader (tank) :       - invite all your characters to a group
-                              - choose the ennemies and tank them
-                              - taunt ennemis targeting your allies
-   - The others (dps, heal) : - accept leader invites
-                              - attack the leader target
-                              - follow the leader and stay at a certain range
-                              - heal the tank in prio + heal the whole party (healer only, cast skill party heal) 
+  - The leader (tank) :       
+   - invite all your characters to a group
+   - choose the ennemies and tank them
+   - taunt ennemis targeting your allies
+  - The others (dps, heal) : 
+   - accept leader invites
+   - attack the leader target
+   - follow the leader and stay at a certain range
+   - heal the tank in prio + heal the whole party (healer only, cast skill party heal) 
                               
 ------------------------------------------
 ------------------------------------------
