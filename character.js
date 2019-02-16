@@ -2,15 +2,15 @@
 // This is CODE, lets you control your character with code.
 // If you don't know how to code, don't worry, It's easy.
 // Just set attack_mode to true and ENGAGE!
-
 var kite=false
+var leaderName="Nedjed"
+var merchantName="GoldmanSachs";
 load_code('Functions')
-leaderName="Nedjed"
-
 setInterval(function(){
 
 	use_hp_or_mp_custo();
 	loot();
+	if(get_player(merchantName)) sendItemToMerchant();
 	if(character.rip || is_moving(character)) return;
 	var leader=get_player(leaderName);
 	if(leader)

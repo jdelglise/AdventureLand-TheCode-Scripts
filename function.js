@@ -1,6 +1,9 @@
+var leaderName="Nedjed"
+var merchantName="GoldmanSachs";
+var minLifeForHeal=0.8
 //Source code of: use_hp_or_mp_custo
-previousHP=""
 lastDamages=""
+previousHP=""
 function use_hp_or_mp_custo()
 {
 	if(safeties && mssince(last_potion)<600) return;
@@ -33,13 +36,12 @@ function inviteMyOtherChar()
 }
 // Below code is used to handle party behavior, based on one leader
 // Currently, leader is the tank
-var partyLeaderName="Nedjed"
 function protectMates()
 {
 	for(id in parent.entities)
 	{
 		var current=parent.entities[id];
-		if(current.type=="monster" && current.target != null && current.target != partyLeaderName)
+		if(current.type=="monster" && current.target != null && current.target != leaderName)
 		{
 			playerTargeted=get_player(current.target)
 			if (playerTargeted != null && playerTargeted.party==character.party)
@@ -57,7 +59,7 @@ function protectMates()
 }
 function attackLeaderTarget()
 {
-	leader=get_player(partyLeaderName);
+	leader=get_player(leaderName);
 	var target=get_target_of(leader);
 	if(target)
 	{
@@ -81,7 +83,7 @@ function followLeader()
 	// Walk half the distance to the leader, keep a distancee of followBy
 	// in the direction, mitigated on the ratio X/Y
 	followBy=80 //radius
-	leader=get_player(partyLeaderName);
+	leader=get_player(leaderName);
 	distX=leader.real_x-character.real_x
 	distY=leader.real_y-character.real_y
 	//Mitigation done below for followBy param
@@ -97,7 +99,7 @@ function followLeader()
 }
 function healLeader()
 {
-	leader=get_player(partyLeaderName);
+	leader=get_player(leaderName);
 	heal_custo(leader);
 }
 //End party related
@@ -196,7 +198,6 @@ function buy_potions()
 		//If you block your main code when is_moving(character), you can buy potions this way and return back without a hassle
 	});
 }
-minLifeForHeal=0.8 // 80%
 function heal_custo(player)
 {
 	if(can_heal(player) && (player.hp/player.max_hp)<minLifeForHeal) heal(player), set_message("Heal " +player);
@@ -213,7 +214,7 @@ function heal_party()
 		{
 			if(character.party==current.party && (current.hp/current.max_hp)<minLifeForHeal)
 			{
-				if(current.name != partyLeaderName)
+				if(current.name != leaderName)
 				{
 					toHeal=current;
 					nbToHeal=nbToHeal+1;
@@ -242,6 +243,28 @@ function heal_party()
 		{
 			use("partyheal",toHeal);
 			set_message("Party heal !!!");
+		}
+	}
+}
+function sendItemToMerchant()
+{
+	for(var i=0;i<character.items.length;i++)
+	{
+		if(character.items[i] != null)
+		{
+			item = character.items[i]
+			var itemDef=G.items[character.items[i].name];
+			if(itemDef.type != "pot")
+			{
+				if(item.q != null)
+				{
+				  send_item(merchantName,i,item.q);
+				}
+				else
+				{
+					send_item(merchantName,i,1);
+				}
+			}
 		}
 	}
 }

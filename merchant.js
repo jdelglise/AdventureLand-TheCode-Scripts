@@ -12,6 +12,7 @@ function merchant()
 {
 	upgradeItems();
 	compoundItems();
+	exchangeItems();
 }
 
 function locateItem(name)
@@ -34,6 +35,24 @@ function upgradeItems()
 			if(itemDef.upgrade && item.level<maxUpgrade && item_grade(item)<=maxGrade)
 			{
 				upgradeItem(i);
+			}
+		}
+	}
+}
+
+function exchangeItems()
+{
+	for(var i=0;i<character.items.length;i++)
+	{
+		if(character.items[i] != null)
+		{
+			item = character.items[i]
+			var itemDef=G.items[character.items[i].name];
+			if(itemDef.e!=null && item.q>=itemDef.e)
+			{
+				game_log("Exchanging " + item.name);
+				smart_move("exchange");
+				exchange(i);
 			}
 		}
 	}
@@ -93,6 +112,7 @@ function upgradeItem(i)
 	{
 		var offering=null;
 		game_log("Upgrading " + item.name);
+		smart_move("upgrade");
 		upgrade(i,itemPlace,offering);
 	}
 }
@@ -116,6 +136,7 @@ function compoundItem(i,j,k)
 	{
 		var offering=null;
 		game_log("Compouning " + item.name);
+		smart_move("compound");
 		compound(i,j,k,itemPlace,offering);
 	}
 }
