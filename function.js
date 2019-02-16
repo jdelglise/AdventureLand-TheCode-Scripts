@@ -80,13 +80,15 @@ function followLeader()
 {
 	// Walk half the distance to the leader, keep a distancee of followBy
 	// in the direction, mitigated on the ratio X/Y
-	followBy=50
+	followBy=80 //radius
 	leader=get_player(partyLeaderName);
 	distX=leader.real_x-character.real_x
 	distY=leader.real_y-character.real_y
 	//Mitigation done below for followBy param
-	followByX=followBy*(distX/(distY+distX))
-	followByY=followBy*(distY/(distY+distX))
+	ratioX=distX/(distY+distX)
+	ratioY=distY/(distY+distY)
+	followByX=followBy*ratioX
+	followByY=followBy*ratioY
 	//Define direction : up, down, right, left
 	newX=character.real_x+(distX)/2+followByX;
 	newY=character.real_y+(distY)/2+followByY;
