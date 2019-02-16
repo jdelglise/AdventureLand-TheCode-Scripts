@@ -37,7 +37,7 @@ setInterval(function(){
 				accept_party_invite(leaderName);
 			}
 			followLeader();
-			if (character.skin=="mpriest" || character.skin=="fpriest")
+			if (character.ctype=="priest")
 			{
 				var healDone=false
 				healLeader();

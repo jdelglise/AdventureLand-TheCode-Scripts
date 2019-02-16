@@ -196,17 +196,52 @@ function buy_potions()
 		//If you block your main code when is_moving(character), you can buy potions this way and return back without a hassle
 	});
 }
+minLifeForHeal=0.8 // 80%
 function heal_custo(player)
 {
-	if(can_heal(player) && (player.hp/player.max_hp)<0.8) heal(player), set_message("Heal Player " +player);
+	if(can_heal(player) && (player.hp/player.max_hp)<minLifeForHeal) heal(player), set_message("Heal " +player);
 }
 function heal_party()
 {
+	nbToHeal=0
+	leadNeedHeal=false
 	for(id in parent.entities)
 	{
+		// checks who need to be healed, with a small twist for the leader which is already healed by default on character script
 		var current=parent.entities[id];
-		if(current.type=="character" || !current.rip) continue;
-		if(current.party && character.party==current.party) continue;
-		heal_custo(current);
+		if(current != null && current.type=="character" && !current.rip)
+		{
+			if(character.party==current.party && (current.hp/current.max_hp)<minLifeForHeal)
+			{
+				if(current.name != partyLeaderName)
+				{
+					toHeal=current;
+					nbToHeal=nbToHeal+1;
+				}
+				else
+				{
+					leadNeedHeal=true;
+				}
+			}
+		}
+		// now checking the current character since it was not in the loop above
+		if((character.hp/character.max_hp)<minLifeForHeal)
+		{
+			toHeal=character;
+			nbToHeal=nbToHeal+1;
+		}
+	}
+	// Now we know how many char needs to be healed, with a separate count for the leader
+	if(nbToHeal==1 && !leadNeedHeal)
+	{
+		heal_custo(toHeal);
+	}
+	else if(nbToHeal>1 || (nbToHeal==1 && leadNeedHeal))
+	{
+		if(can_use("partyheal"))
+		{
+			use("partyheal",toHeal);
+			set_message("Party heal !!!");
+		}
 	}
 }
