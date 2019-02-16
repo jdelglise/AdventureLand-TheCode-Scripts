@@ -42,14 +42,14 @@ This script does the following :
 
 - Have a party behaviour :
   - The leader (tank) :       
-   - invite all your characters to a group
-   - choose the ennemies and tank them
-   - taunt ennemis targeting your allies
+    - invite all your characters to a group
+    - choose the ennemies and tank them
+    - taunt ennemis targeting your allies
   - The others (dps, heal) : 
-   - accept leader invites
-   - attack the leader target
-   - follow the leader and stay at a certain range
-   - heal the tank in prio + heal the whole party (healer only, cast skill party heal) 
+    - accept leader invites
+    - attack the leader target
+    - follow the leader and stay at a certain range
+    - heal the tank in prio + heal the whole party (healer only, cast skill party heal) 
                               
 ------------------------------------------
 ------------------------------------------
