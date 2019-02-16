@@ -63,7 +63,7 @@ function locateSimilarItem(item)
 	var similarItems=[];
 	for(var i=0;i<character.items.length;i++)
 	{
-		if(character.items[i].name==item.name && character.items[i].level==item.level )
+		if(character.items[i] != null && character.items[i].name==item.name && character.items[i].level==item.level )
 		{
 			similarItems.push(i);
 		}
@@ -81,10 +81,10 @@ function compoundItems()
 			var itemDef=G.items[character.items[i].name];
 			if(itemDef.compound && item.level<maxCompoundLevel && item_grade(item)<=maxGrade)
 			{
-				similarItems=locateSimilarItem();
+				similarItems=locateSimilarItem(item);
 				if(similarItems.length>2)
 				{
-					upgradeItem(i,similarItems[0],similarItems[1]);
+					compoundItem(i,similarItems[0],similarItems[1]);
 				}
 			}
 		}
@@ -100,11 +100,11 @@ function upgradeItem(i)
 	{
 		itemPlace=locateItem("scroll0");
 	}
-	elseif(item_grade(item)==1) 
+	else if(item_grade(item)==1) 
 	{
 		itemPlace=locateItem("scroll1");
 	}
-	elseif(item_grade(item)==2) 
+	else if(item_grade(item)==2) 
 	{
 		itemPlace=locateItem("scroll2");
 	}
@@ -124,11 +124,11 @@ function compoundItem(i,j,k)
 	{
 		itemPlace=locateItem("cscroll0");
 	}
-	elseif(item_grade(item)==1) 
+	else if(item_grade(item)==1) 
 	{
 		itemPlace=locateItem("cscroll1");
 	}
-	elseif(item_grade(item)==2) 
+	else if(item_grade(item)==2) 
 	{
 		itemPlace=locateItem("cscroll2");
 	}
