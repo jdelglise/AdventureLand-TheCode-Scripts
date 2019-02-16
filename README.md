@@ -7,7 +7,7 @@ How To Use
 ------------------------------------------
 
 ------------------------------------------
-              function.js
+function.js
 ------------------------------------------
 
 Save the function.js as functions the game
@@ -24,7 +24,7 @@ Other functions might also be fine tuned as you whish with the params, e.g :
   minLifeForHeal=0.8 // Priest param only, in my situations 80% is perfect, for your case you might change it ;)
   
 ------------------------------------------
-              character.js
+character.js
 ------------------------------------------
 
 Load character script to any of your character
@@ -32,7 +32,7 @@ Load character script to any of your character
 
 ------------------------------------------
 ------------------------------------------
-         What this script can do
+What this script can do
 ------------------------------------------
 ------------------------------------------
 This script does the following :
@@ -51,23 +51,23 @@ This script does the following :
                               
 ------------------------------------------
 ------------------------------------------
-         Futur improvement
+Futur improvement
 ------------------------------------------
 ------------------------------------------
 
 ------------------------------------------
-      Merchant and item crafting
+Merchant and item crafting
 ------------------------------------------
 - Add a specific code to send all items to merchant
 - Merchant will decide what to do with items and will upgrade it, exchange it or sell it
 
 ------------------------------------------
-         Automated journey
+Automated journey
 ------------------------------------------
 - Currently the leader needs to be moved manually to a zone, this should be automated at some point (will requires a lot of effort)
 
 ------------------------------------------
-         Behaviour enhancement
+Behaviour enhancement
 ------------------------------------------
 - Currently, the character are not able to "unstuck" themselves, manual move might be required
 - During fight, the tank should start kitting when low life
