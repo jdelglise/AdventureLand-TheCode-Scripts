@@ -11,7 +11,7 @@ function use_hp_or_mp_custo()
 	minHPTrigger=50
 	minHPPercentToKeep=50
 	minMPTrigger=50
-	minMPPercentToKeep=50
+	minMPPercentToKeep=80
 	//Code below does the following : log the last damage received
 	//If this amount is above the min amout set above, will be taken into account
 	//else will use it to trigger the hp pot
@@ -80,21 +80,25 @@ function attackLeaderTarget()
 }
 function followLeader()
 {
-	// Walk half the distance to the leader, keep a distancee of followBy
-	// in the direction, mitigated on the ratio X/Y
 	followBy=80 //radius
 	leader=get_player(leaderName);
-	distX=leader.real_x-character.real_x
-	distY=leader.real_y-character.real_y
-	//Mitigation done below for followBy param
-	ratioX=distX/(distY+distX)
-	ratioY=distY/(distY+distY)
-	followByX=followBy*ratioX
-	followByY=followBy*ratioY
-	//Define direction : up, down, right, left
-	newX=character.real_x+(distX)/2+followByX;
-	newY=character.real_y+(distY)/2+followByY;
-	//move
+	distX=leader.x-character.x
+	distY=leader.y-character.y
+	var leadTarget=get_target_of(leader);
+	if(leadTarget && leadTarget.type=="monster") 
+	{
+		distTargX=leader.x-leadTarget.x
+		distTargY=leader.y-leadTarget.y
+		ratioTargetX=distTargX/(Math.abs(distTargY)+Math.abs(distTargX))
+		ratioTargetY=distTargY/(Math.abs(distTargY)+Math.abs(distTargX))
+		newX=character.x+distX/2+(followBy*ratioTargetX);
+		newY=character.y+distY/2+(followBy*ratioTargetY);	
+	}
+	else //stricly follow leader if no target
+	{
+		newX=character.x+(distX/2);
+		newY=character.y+(distY/2);
+	}
 	move(newX,newY);
 }
 function healLeader()
