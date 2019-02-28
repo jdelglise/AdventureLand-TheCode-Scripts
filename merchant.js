@@ -46,13 +46,16 @@ function buffPlayers()
 	for(id in parent.entities)
 	{
 		var current=parent.entities[id];
-		if(current.type=="character")
+		if(current.type=="character" && !current.npc)
 		{
 			playerTargeted=get_player(current.name)
-			if(G.skills.mluck.mp<character.mp && parent.game_stringify(playerTargeted.s.mluck,2) == "undefined")
+			if(G.skills.mluck.mp<character.mp && playerTargeted.s.mluck == null)
 			{
-				game_log("Casting mluck on " + playerTargeted.name)
-				use("mluck",current)
+				if(can_use("mluck") && in_attack_range(playerTargeted))
+				{
+					game_log("Casting mluck on " + playerTargeted.name)
+					use("mluck",current)
+				}
 			}
 		}
 	}
