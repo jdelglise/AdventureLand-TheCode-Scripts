@@ -5,7 +5,7 @@ var maxGrade=0
 setInterval(function(){
 	merchant()
 
-},1000*15); // Loops every 15 seconds.
+},1000*1); // Loops every 1 seconds.
 
 
 function merchant()
@@ -13,6 +13,7 @@ function merchant()
 	upgradeItems();
 	compoundItems();
 	exchangeItems();
+	buffPlayers()
 }
 
 function locateItem(name)
@@ -35,6 +36,23 @@ function upgradeItems()
 			if(itemDef.upgrade && item.level<maxUpgrade && item_grade(item)<=maxGrade)
 			{
 				upgradeItem(i);
+			}
+		}
+	}
+}
+
+function buffPlayers()
+{
+	for(id in parent.entities)
+	{
+		var current=parent.entities[id];
+		if(current.type=="character")
+		{
+			playerTargeted=get_player(current.name)
+			if(G.skills.mluck.mp<character.mp && parent.game_stringify(playerTargeted.s.mluck,2) == "undefined")
+			{
+				game_log("Casting mluck on " + playerTargeted.name)
+				use("mluck",current)
 			}
 		}
 	}
