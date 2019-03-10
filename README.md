@@ -45,23 +45,27 @@ This script does the following :
     - invite all your characters to a group
     - choose the ennemies and tank them
     - taunt ennemis targeting your allies
+    - use hardshell skill if life is below a certain limit
   - The others (dps, heal) : 
     - accept leader invites
     - attack the leader target
     - follow the leader and stay at a certain range
-    - heal the tank in prio + heal the whole party (healer only, cast skill party heal) 
+    - heal the tank in prio + heal the whole party (healer only, cast skill party heal)
+    - mage cast manaburst to spend mana
+    
+ - Merchant behaviour :
+   - Add a specific code to send all items to merchant
+   - Merchant will decide what to do with items and will upgrade it, exchange it or sell it
                               
 ------------------------------------------
 ------------------------------------------
 Futur improvement
 ------------------------------------------
 ------------------------------------------
-
 ------------------------------------------
 Merchant and item crafting
 ------------------------------------------
-- Add a specific code to send all items to merchant
-- Merchant will decide what to do with items and will upgrade it, exchange it or sell it
+- Fix item slott issue causing deconnexion if merchant inventory is full
 
 ------------------------------------------
 Automated journey
@@ -73,7 +77,7 @@ Behaviour enhancement
 ------------------------------------------
 - Currently, the character are not able to "unstuck" themselves, manual move might be required
 - During fight, the tank should start kitting when low life
-- Add more spell casting (currently only 2 are used)
+- Add spell casting for missing classes and complete existing classes (only important skill are handled now)
 - Create more solo behaviour, currently always party
 - Create "superiors" behaviour to take advantage over other groups present in the zone
 
