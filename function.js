@@ -3,15 +3,15 @@ var merchantName="GoldmanSachs";
 var minLifeForHeal=0.8
 //Source code of: use_hp_or_mp_custo
 lastDamages=""
-previousHP=""
+previousHP=""	
+minHPTrigger=50
+minHPPercentToKeep=50
+minMPTrigger=50
+minMPPercentToKeep=80
 function use_hp_or_mp_custo()
 {
 	if(safeties && mssince(last_potion)<600) return;
 	var used=false;
-	minHPTrigger=50
-	minHPPercentToKeep=50
-	minMPTrigger=50
-	minMPPercentToKeep=80
 	//Code below does the following : log the last damage received
 	//If this amount is above the min amout set above, will be taken into account
 	//else will use it to trigger the hp pot
@@ -57,6 +57,28 @@ function protectMates()
 		}
 	}
 }
+manaBurstName="burst"
+minMpForBurst=0.6
+manaBurstLastUse=new Date();
+specialAttackUsed=false
+function specialAttack(target)
+{
+	actionPerfomed=0
+	if(character.ctype=="mage")	
+	{
+		if(character.mp/character.max_mp > minMpForBurst && character.mp >= G.skills[manaBurstName].mp && can_use(manaBurstName))
+		{
+			if(mssince(manaBurstLastUse) > G.skills[manaBurstName].cooldown)
+			{
+				use(manaBurstName,target);
+				manaBurstLastUse=new Date();
+				actionPerfomed++;
+			}
+		}
+	}
+	if (actionPerfomed > 0) specialAttackUsed=true
+	else specialAttackUsed=false
+}
 function attackLeaderTarget()
 {
 	leader=get_player(leaderName);
@@ -74,7 +96,8 @@ function attackLeaderTarget()
 		else if(can_attack(target))
 		{
 			set_message("Attacking");
-			attack(target);
+			specialAttack(target);
+			if(!specialAttackUsed) attack(target);
 		}
 	}
 }
@@ -191,6 +214,44 @@ function fight()
 		attack(target);
 	}
 }
+minHpForShell=0.55
+shieldSpellName="hardshell"
+var shellLastUse=new Date();
+function tank()
+{
+	var target=get_targeted_monster();
+	if(!target)
+	{
+		target=getTargetCusto();
+		if(target) change_target(target);
+		else
+		{
+			set_message("No Monsters");
+			return;
+		}
+	}
+	if(!in_attack_range(target))
+	{
+		xmove(
+			character.x+(target.x-character.x)/2,
+			character.y+(target.y-character.y)/2
+			);
+		// Walk half the distance
+	}
+	else if(character.hp/character.max_hp < minHpForShell && character.mp >= G.skills[shieldSpellName].mp && can_use(shieldSpellName))
+	{
+		if(mssince(shellLastUse) > G.skills[shieldSpellName].cooldown)
+		{
+			use(shieldSpellName);
+			shellLastUse=new Date();
+		}
+	}
+	else if(can_attack(target))
+	{
+		set_message("Attacking");
+		attack(target);
+	}
+}
 function buy_potions()
 {
 	var x=character.real_x,y=character.real_y,map=character.map;
@@ -206,6 +267,8 @@ function heal_custo(player)
 {
 	if(can_heal(player) && (player.hp/player.max_hp)<minLifeForHeal) heal(player), set_message("Heal " +player);
 }
+partyHealName="partyheal"
+partyHeallLastUse=new Date();
 function heal_party()
 {
 	nbToHeal=0
@@ -243,10 +306,14 @@ function heal_party()
 	}
 	else if(nbToHeal>1 || (nbToHeal==1 && leadNeedHeal))
 	{
-		if(can_use("partyheal"))
+		if(character.mp >= G.skills[partyHealName].mp && can_use(partyHealName))
 		{
-			use("partyheal",toHeal);
-			set_message("Party heal !!!");
+			if(mssince(partyHeallLastUse) > G.skills[partyHealName].cooldown)
+			{
+				use(partyHealName,toHeal);
+				set_message("Party heal !!!");
+				partyHeallLastUse=new Date();
+			}
 		}
 	}
 }

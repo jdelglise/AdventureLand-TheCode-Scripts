@@ -28,7 +28,7 @@ setInterval(function(){
 				protectMates();
 			}
 			if(kite) kiteEnnemy();
-			else fight();
+			else tank();
 		}
 		else
 		{
@@ -49,10 +49,6 @@ setInterval(function(){
 				attackLeaderTarget();
 			}
 		}
-	}
-	else
-	{
-		game_log("Break");
 	}
 	//if(quantity("hpot0") < 50) buy_potions;
 },1000/8); // Loops every 1/4 seconds.
